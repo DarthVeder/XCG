@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1463827426 source:c:\home\marco\work\flight dynamics\b350\cg\xcg\main.cpp
-	<iostream>
-	<fstream>
-	<string>
-	<vector>
-
