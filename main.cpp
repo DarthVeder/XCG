@@ -2,11 +2,17 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <algorithm>
+#include <locale>
+#include "aircraft.h"
+#include "isa.h"
 
 using namespace std;
 
 int main()
 {
+    cout<<" *** AICRAFT CG LIMITS ***"<<endl;
 
     ifstream ac_file;
     string file_name = "C:\\home\\marco\\Work\\Flight Dynamics\\B350\\CG\\XCG\\bin\\Release\\aircraft.cfg";
@@ -55,13 +61,35 @@ int main()
         {
             cout<<"Found block: "<<line.substr(found_q1+1,found_q2-found_q1-1)<<endl;
         }
-        cout<<line<<endl;
+        //out<<line<<endl;
+        string::iterator end_pos = remove(line.begin(), line.end(), ' ');
+        line.erase(end_pos, line.end());
+
+
+
+        // Empty weight
+        size_t found_ew = line.find("empty_weight=");
+        if ( found_ew!=string::npos )
+        {
+            stringstream ss;
+            double ew = 0.0;
+
+            cout<<line<<endl;
+            ss << line.substr(13,line.size());
+            ss>>ew;
+            cout<<"ew "<<ew<<endl;
+        }
     }
 
-    cout<<" ** END **"<<endl;
+    cout<<" *** END ***"<<endl;
 
 
     ac_file.close();
+
+    class aircraft;
+
+    ISA isa;
+    isa.print();
 
 
     return 0;
