@@ -34,13 +34,13 @@ void ISA::print()
 
 ISA::ISA()
 {
-    rhoSL = 1.225;
-    TSL = 288.15;
-    pSL = 1013.25e2;
-    Rair = 287.0528;
-    gamma = 1.4;
-    g = 9.806645;
-    dTdz = -6.5/1000;
+    rhoSL = 1.225; // kg/m^3
+    TSL = 288.15; // K
+    pSL = 1013.25e2; // Pa
+    Rair = 287.0528; // J/kgK
+    gamma = 1.4; 
+    g = 9.806645; // m/s^2
+    dTdz = -6.5/1000; // K/m
 }
 
 double ISA::density(double h)
