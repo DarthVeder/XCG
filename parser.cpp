@@ -1,6 +1,6 @@
  #include "parser.h"
 
-void parser(ifstream &ac_file)
+void parseCfgFile(ifstream &ac_file)
 {
     // Parsing aircraft.cfg
     string line;

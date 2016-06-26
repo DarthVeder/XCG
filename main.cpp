@@ -1,13 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
-#include <sstream>
-#include <algorithm>
-#include <locale>
 #include "aircraft.h"
 #include "isa.h"
 #include "menu.h"
+#include "parser.h"
 
 using namespace std;
 
@@ -25,13 +22,16 @@ int main()
         {
                 case readCfgFile:
                     {
-                        string file_name = "./aircraft.cfg";
+                        cout<<"WRITE ABSOLUTE PATH TO aircraft.cfg: "<<endl;
+                        string file_name;
+                        getline(cin,file_name);
                         ac_file.open(file_name.c_str());
                         if (!ac_file.is_open())
                         {
                             cout<<"File \""<<file_name<<"\" not found"<<endl;
                             return 1;
                         }
+                        parseCfgFile(ac_file);
                         break;
                     }
                 case printISA:
