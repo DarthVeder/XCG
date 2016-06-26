@@ -1,16 +1,18 @@
 #ifndef AIRCRAFT_H_INCLUDED
 #define AIRCRAFT_H_INCLUDED
 
+#include <vector>
 #include "engine.h"
+#include "wing.h"
 
 class Aircraft
 {
-    public:
-        Engine engine;
-        double CD0;
-        double k;
-        double DCDf;
-        double DCLf;
+public:
+    double DOM;
+    double MTOM;
+    double MLM;
+    double MTAXI;
+    vector<Wing> wing;
 };
 
 

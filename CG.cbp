@@ -33,6 +33,8 @@
 		<Unit filename="menu.h" />
 		<Unit filename="parser.cpp" />
 		<Unit filename="parser.h" />
+		<Unit filename="wing.cpp" />
+		<Unit filename="wing.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

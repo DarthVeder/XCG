@@ -6,7 +6,7 @@
 using namespace std;
 
 /*! \file engine.h
-\brief Contains three possible engine power plants
+\brief Contains four possible engine power plants
 */
 
 struct Point

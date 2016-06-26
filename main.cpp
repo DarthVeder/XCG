@@ -5,6 +5,7 @@
 #include "isa.h"
 #include "menu.h"
 #include "parser.h"
+#include "aircraft.h"
 
 using namespace std;
 
@@ -24,14 +25,16 @@ int main()
                     {
                         cout<<"WRITE ABSOLUTE PATH TO aircraft.cfg: "<<endl;
                         string file_name;
-                        getline(cin,file_name);
+                        //getline(cin,file_name);
+                        file_name="C:\\home\\marco\\Work\\Flight Dynamics\\B350\\CG\\XCG\\bin\\Release\\aircraft.cfg";
                         ac_file.open(file_name.c_str());
                         if (!ac_file.is_open())
                         {
                             cout<<"File \""<<file_name<<"\" not found"<<endl;
                             return 1;
                         }
-                        parseCfgFile(ac_file);
+                        Aircraft acft;
+                        acft = parseCfgFile(ac_file);
                         break;
                     }
                 case printISA:

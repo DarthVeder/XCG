@@ -7,10 +7,11 @@
 #include <iostream>
 #include <algorithm>
 #include <sstream>
+#include "aircraft.h"
 
 using namespace std;
 
-void parseCfgFile(ifstream &ac_file);
+Aircraft parseCfgFile(ifstream &ac_file);
 
 
 #endif // PARSER_H_INCLUDED

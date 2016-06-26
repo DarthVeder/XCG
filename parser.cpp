@@ -1,14 +1,16 @@
  #include "parser.h"
 
-void parseCfgFile(ifstream &ac_file)
+Aircraft parseCfgFile(ifstream &ac_file)
 {
+    Aircraft acft;
     // Parsing aircraft.cfg
     string line;
 
-    while (!ac_file.eof())
+    while ( !ac_file.eof() )
     {
         // reading line
         getline(ac_file,line);
+        //cout<<line<<endl;
 
         // Checking if the line is a comment
         vector<string> c_type;
@@ -40,23 +42,25 @@ void parseCfgFile(ifstream &ac_file)
         {
             cout<<"Found block: "<<line.substr(found_q1+1,found_q2-found_q1-1)<<endl;
         }
-        //out<<line<<endl;
+        // kill any white space present
         string::iterator end_pos = remove(line.begin(), line.end(), ' ');
         line.erase(end_pos, line.end());
-
-
+        // Now line is a string without spaces that can be broken at the symbol '='
 
         // Empty weight
         size_t found_ew = line.find("empty_weight=");
         if ( found_ew!=string::npos )
         {
-            stringstream ss;
-            double ew = 0.0;
+            size_t found_s = line.find("=");
+            line = line.substr(found_s+1,line.size());
 
-            cout<<line<<endl;
-            ss << line.substr(13,line.size());
-            ss>>ew;
-            cout<<"ew "<<ew<<endl;
+            stringstream line_val;
+            line_val<<line;
+            double val;
+            line_val>>val;
+            cout<<val<<endl;
         }
     }
+
+    return acft;
 }
