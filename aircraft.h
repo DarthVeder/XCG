@@ -5,15 +5,20 @@
 #include "engine.h"
 #include "wing.h"
 
+
 class Aircraft
 {
 public:
+    ~Aircraft() { delete pengine; };
+    Aircraft() { pengine = new Engine; };
+    Engine *pengine;
+    vector<Wing> wing;
+    double reference_datum_position;
     double DOM;
     double MTOM;
     double MLM;
     double MTAXI;
-    vector<Wing> wing;
 };
 
 
-#endif // AIRCRAFT_H_INCLUDED
+#endif /* AIRCRAFT_H_INCLUDED */

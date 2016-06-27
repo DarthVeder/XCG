@@ -1,8 +1,20 @@
- #include "parser.h"
+#include "parser.h"
+
+enum t_wing
+{
+    main_wing=0,
+    tail=1,
+    rudder=2
+};
 
 Aircraft parseCfgFile(ifstream &ac_file)
 {
     Aircraft acft;
+    acft.wing.resize(3);
+    acft.wing[main_wing].setName("main wing");
+    acft.wing[tail].setName("tail");
+    acft.wing[rudder].setName("rudder");
+
     // Parsing aircraft.cfg
     string line;
 
@@ -47,20 +59,101 @@ Aircraft parseCfgFile(ifstream &ac_file)
         line.erase(end_pos, line.end());
         // Now line is a string without spaces that can be broken at the symbol '='
 
-        // Empty weight
-        size_t found_ew = line.find("empty_weight=");
-        if ( found_ew!=string::npos )
-        {
-            size_t found_s = line.find("=");
-            line = line.substr(found_s+1,line.size());
+        // Aircraft geometry
+        double val = 0;
+        vector<double> pos(3,0);
+        string name = "";
 
-            stringstream line_val;
-            line_val<<line;
-            double val;
-            line_val>>val;
-            cout<<val<<endl;
-        }
+        // main wing
+        name = "wing_area=";
+        val = setValue(line, name);
+        acft.wing[main_wing].setArea(val);
+
+        name = "wing_span=";
+        val = setValue(line, name);
+        acft.wing[main_wing].setSpan(val);
+
+        name = "wing_root_chord=";
+        val = setValue(line, name);
+        acft.wing[main_wing].setCroot(val);
+
+        name = "wing_sweep=";
+        val = setValue(line, name);
+        acft.wing[main_wing].setSweep(val);
+
+        name = "oswald_efficiency_factor=";
+        val = setValue(line, name);
+        acft.wing[main_wing].setOswald(val);
+
+        name = "wing_pos_apex_lon=";
+        pos[0] = setValue(line, name);
+        name = "wing_pos_apex_vert=";
+        pos[2] = setValue(line, name);
+        acft.wing[main_wing].setPosition(pos);
+
+
+        // tail
+        name = "htail_area=";
+        val = setValue(line, name);
+        acft.wing[tail].setArea(val);
+
+        name = "htail_span=";
+        val = setValue(line, name);
+        acft.wing[tail].setSpan(val);
+
+        name = "htail_sweep=";
+        val = setValue(line, name);
+        acft.wing[tail].setSweep(val);
+
+        name = "htail_pos_lon=";
+        pos[0] = setValue(line, name);
+        name = "htail_pos_vert=";
+        pos[2] = setValue(line, name);
+        acft.wing[tail].setPosition(pos);
+
+        // rudder
+        name = "vtail_area=";
+        val = setValue(line, name);
+        acft.wing[rudder].setArea(val);
+
+        name = "vtail_span=";
+        val = setValue(line, name);
+        acft.wing[rudder].setSpan(val);
+
+        name = "vtail_sweep=";
+        val = setValue(line, name);
+        acft.wing[rudder].setSweep(val);
+
+        name = "vtail_pos_lon=";
+        pos[0] = setValue(line, name);
+        name = "vtail_pos_vert=";
+        pos[2] = setValue(line, name);
+        acft.wing[rudder].setPosition(pos);
+
+        // datum_position
+        name = "reference_datum_position=";
+        val = setValue(line, name);
+        acft.reference_datum_position = val;
     }
 
     return acft;
+}
+
+
+double setValue(string &line, string &name)
+{
+    double val = 0.0;
+
+    size_t found_ew = line.find(name);
+    if ( found_ew!=string::npos)
+    {
+        size_t found_s = line.find("="); // all lines are "name=values"
+        line = line.substr(found_s+1,line.size()); // Isolating value after "="
+
+        stringstream line_val;
+        line_val<<line;
+        line_val>>val;
+        //cout<<name<<" "<<val<<endl;
+    }
+    return val;
 }
