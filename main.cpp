@@ -17,11 +17,12 @@ int main()
 
     while (run)
     {
+        Aircraft acft;
         choice uChoice = menu();
 
         switch (uChoice)
         {
-                case readCfgFile:
+                case READFILE:
                     {
                         cout<<"WRITE ABSOLUTE PATH TO aircraft.cfg: "<<endl;
                         string file_name;
@@ -33,17 +34,19 @@ int main()
                             cout<<"File \""<<file_name<<"\" not found"<<endl;
                             return 1;
                         }
-                        Aircraft acft;
                         acft = parseCfgFile(ac_file);
+                        acft.print();
+
+                        ac_file.close();
                         break;
                     }
-                case printISA:
+                case PRINTISA:
                     {
                          ISA isa;
                          isa.print();
                          break;
                     }
-                case quit:
+                case QUIT:
                     {
                         run = false;
                         break;
@@ -54,10 +57,6 @@ int main()
     }
 
     cout<<" *** END ***"<<endl;
-
-
-    ac_file.close();
-
 
     return 0;
 }

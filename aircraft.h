@@ -5,19 +5,25 @@
 #include "engine.h"
 #include "wing.h"
 
+class Mass
+{
+public:
+    double DOM;
+    double xCG_DOM;
+    double MTOM;
+    double MLM;
+    double MTAXI;
+};
 
 class Aircraft
 {
 public:
-    ~Aircraft() { delete pengine; };
-    Aircraft() { pengine = new Engine; };
-    Engine *pengine;
+    Engine engine;
     vector<Wing> wing;
     double reference_datum_position;
-    double DOM;
-    double MTOM;
-    double MLM;
-    double MTAXI;
+    Mass mass;
+
+    void print();
 };
 
 
