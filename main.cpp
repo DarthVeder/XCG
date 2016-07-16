@@ -35,6 +35,7 @@ int main()
                             return 1;
                         }
                         acft = parseCfgFile(ac_file);
+                        acft.computeData();
                         acft.print();
 
                         ac_file.close();

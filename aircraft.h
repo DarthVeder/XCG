@@ -4,8 +4,13 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
+
+const double PI = asin(1.)*2.;
+
+enum engine_t { Piston =0, Jet=1, None=2, HeloTurbine=3, Rocket=4, Turboprop=5};
 
 class Aircraft
 {
@@ -17,7 +22,7 @@ public:
     void insertKeyValue(string key, double value) { data[key] = value; };
 
     // Output methods:
-    double aspectRatio();
+    void computeData();
 
     void print();
 };

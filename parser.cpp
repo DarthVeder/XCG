@@ -13,28 +13,47 @@ Aircraft parseCfgFile(ifstream &ac_file)
     name.push_back("oswald_efficiency_factor");
     name.push_back("wing_pos_apex_lon");
     name.push_back("wing_pos_apex_vert");
-    max_gross_weight
-    empty_weight
-    reference_datum_position
-    empty_weight_CG_position
-    station_load.
-    empty_weight_pitch_MOI
-    empty_weight_roll_MOI
-    empty_weight_yaw_MOI
-    empty_weight_coupled_MOI
-    cruise_lift_scalar
-    parasite_drag_scalar
-    induced_drag_scalar
-    elevator_effectiveness
-    rudder_effectiveness
-    pitch_stability
-    yaw_stability
-    elevator_trim_effectiveness
-    engine_type
-    Engine.
-    fuel_flow_scalar
+    name.push_back("htail_area");
+    name.push_back("htail_span");
+    name.push_back("htail_pos_lon");
+    name.push_back("htail_pos_vert");
+    name.push_back("htail_incidence");
+    name.push_back("htail_sweep");
+    name.push_back("vtail_area");
+    name.push_back("vtail_span");
+    name.push_back("vtail_pos_lon");
+    name.push_back("vtail_pos_vert");
+    name.push_back("vtail_sweep");
+    name.push_back("max_gross_weight");
+    name.push_back("empty_weight");
+    name.push_back("reference_datum_position");
+    name.push_back("empty_weight_cg_position");
+    //station_load.
+    name.push_back("cruise_lift_scalar");
+    name.push_back("parasite_drag_scalar");
+    name.push_back("induced_drag_scalar");
+    name.push_back("elevator_effectiveness");
+    name.push_back("rudder_effectiveness");
+    name.push_back("pitch_stability");
+    name.push_back("yaw_stability");
+    name.push_back("elevator_trim_effectiveness");
+    //[GeneralEngineData]
+    name.push_back("engine_type"); //0=Piston, 1=Jet, 2=None, 3=Helo-Turbine, 4=Rocket, 5=Turboprop
+    //Engine.
+    name.push_back("fuel_flow_scalar");
+    //[propeller]
+    name.push_back("static_thrust");
+    //[TurbineEngineData]
+    name.push_back("powerspecificfuelconsumption");
+    //name.push_back("PowerSpecificFuelConsumption");
+    //[contact_points]
+    //point.
+    //flaps.
+    //flaps-position.
+    //[fuel]
+    //LeftMain
 
-    // by default this vector is false. Every time a key,value pair is found, the value is changed to true
+    // By default this vector is false. Every time a key,value pair is found, the value is changed to true
     vector<bool> name_done;
     for (unsigned i=0; i<name.size(); i++)
         name_done.push_back(false);
@@ -57,11 +76,25 @@ Aircraft parseCfgFile(ifstream &ac_file)
         if ( !isCommentLine(line) )
         {
             // Looping trough all the key,value pairs required, if not already inserted
-            for (size_t n=0; n<name.size() && !name_done[n]; n++)
+            for (size_t n=0; n<name.size(); n++)
             {
+                if (name_done[n]) continue;
                 double val = 0.;
-                if ( foundKeyValue(line, name[n], val) ) acft.insertKeyValue(name[n],val);
+                if ( foundKeyValue(line, name[n], val) )
+                {
+                    acft.insertKeyValue(name[n],val);
+                    name_done[n] = true;
+                }
             }
+        }
+    }
+    // Check everything is loaded correctly:
+    for (unsigned n = 0; n<name_done.size(); n++)
+    {
+        if (!name_done[n])
+        {
+            cerr<<"WARNING: "<<name[n]<<" NOT LOADED "<<endl;
+            assert(name_done[n] == true);
         }
     }
 
