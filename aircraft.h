@@ -1,27 +1,23 @@
 #ifndef AIRCRAFT_H_INCLUDED
 #define AIRCRAFT_H_INCLUDED
 
+#include <map>
 #include <vector>
-#include "engine.h"
-#include "wing.h"
+#include <iostream>
 
-class Mass
-{
-public:
-    double DOM;
-    double xCG_DOM;
-    double MTOM;
-    double MLM;
-    double MTAXI;
-};
+using namespace std;
 
 class Aircraft
 {
+private:
+    map< string, double > data;
 public:
-    Engine engine;
-    vector<Wing> wing;
-    double reference_datum_position;
-    Mass mass;
+    Aircraft() {};
+    // Insert method:
+    void insertKeyValue(string key, double value) { data[key] = value; };
+
+    // Output methods:
+    double aspectRatio();
 
     void print();
 };

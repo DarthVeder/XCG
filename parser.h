@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 #include <algorithm>
 #include <sstream>
@@ -15,12 +16,8 @@ using namespace std;
 const vector<string> c_type = { "//", ";" };
 
 Aircraft parseCfgFile(ifstream &ac_file);
-double setValue(string &line, string &name);
-double setValue2(string &line, string &name);
-void killWhiteSpaces(string &line);
-void toLower(string &line);
+bool foundKeyValue(string &line, string &name, double &val);
 void cleanLine(string &line);
 bool isCommentLine(string &line);
-bool isBlock(string &line, string &block_name);
 
 #endif /* PARSER_H_INCLUDED */
